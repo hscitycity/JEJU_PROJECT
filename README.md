@@ -6,6 +6,47 @@
 
 ---
 
+## ⚡ 빠른 시작 (AI Agent에 한 줄 입력)
+
+Claude Code, Cursor, OpenCode 등 **MCP를 지원하는 AI Agent**에 아래 문구 한 줄을 그대로 붙여넣으면, Agent가 알아서 저장소를 받고 의존성을 설치하고 MCP 서버를 등록까지 해 줍니다.
+
+> 사전 준비: [공공데이터포털](https://www.data.go.kr)에서 **나라장터 공공데이터개방표준서비스** 활용신청 후 **Decoding 인증키**를 발급받아 두세요.
+
+### 입력 문구 (그대로 복사)
+
+```
+https://github.com/hscitycity/jeju_narajangteo.git 저장소를 클론해서 나라장터 MCP를 내 AI Agent에 추가해줘.
+
+수행할 작업:
+1. 적당한 경로에 `git clone https://github.com/hscitycity/jeju_narajangteo.git`
+2. 클론한 폴더에서 `npm install`
+3. 현재 사용 중인 AI Agent의 MCP 설정 파일을 찾아서 아래 서버를 추가:
+   - 이름: narajangteo
+   - type: stdio (또는 local)
+   - command: node
+   - args: [클론한_절대경로/src/server.js]
+   - env:
+     - PUBLIC_PROCUREMENT_BASE_URL = https://apis.data.go.kr/1230000/ao/PubDataOpnStdService
+     - PUBLIC_PROCUREMENT_SERVICE_KEY = <여기에_내_Decoding_서비스키를_물어보고_받아서_넣기>
+     - PUBLIC_PROCUREMENT_TIMEOUT_MS = 15000
+4. Agent/IDE를 재시작해야 한다고 안내해줘.
+5. 재시작 후 sync_procurement_data(fromDate="202605010000", toDate="202605300000") 호출해서 결과를 검증해줘.
+
+운영체제는 자동 감지하고, Windows면 경로 구분자와 `cmd /c` 래핑까지 알아서 처리해줘. 서비스키는 절대 코드에 하드코딩하거나 git에 커밋하지 말 것.
+```
+
+위 문구를 입력하면 Agent가 진행 도중 **서비스키를 물어봅니다.** 그때 발급받은 키를 한 번만 붙여넣으면 됩니다. 키는 사용자 홈 디렉토리의 MCP 설정 파일에만 저장되며 저장소에는 커밋되지 않습니다.
+
+### 작동 확인
+
+설치/재시작이 끝나면 Agent에 이렇게 말해 보세요:
+
+```
+narajangteo MCP로 202605010000~202605300000 입찰공고 가져와서 공고명만 표로 보여줘
+```
+
+---
+
 ## 1. 준비
 
 ### 1.1 요구사항
