@@ -1,0 +1,17 @@
+{
+  "name": "narajangteo-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Korea public procurement alerts",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "lint": "node --check src/server.js && node --check src/g2b-api.js && node --check src/store.js && node --check src/utils.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
